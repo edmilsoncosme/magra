@@ -12,11 +12,13 @@ Este projeto implementa um sistema completo para previsão de evasão de estudan
 
 2. Crie e ative um ambiente virtual:
    ```bash
-   python -m venv venv
    # Windows:
+   python -m venv venv
    venv\Scripts\activate
-   # Linux/Mac:
-   source venv/bin/activate
+   # Linux com python 3.13:
+   sudo apt install python3.13-venv
+   python3.13 -m venv .venv
+   source .venv/bin/activate
    ```
 
 3. Instale as dependências:
