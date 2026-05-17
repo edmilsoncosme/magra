@@ -5,3 +5,34 @@ Antes de iniciar a implementação, recomendo verificar as specs de conexão e q
 
 ### Sugestão dos próximo passo feito pelo OpenCode
 - Próximo passo: criar o módulo transform/situacao.py para classificar FORMADO/EVADIDO RN-001?
+
+### preprando o prompt para o OpenCode
+Esotu migrando este projeto que era feito em R e agora estou migrando para Python. 
+O plano @plano_magra.md foi definido com base nas especificações que estão na pasta @_reversa_sdd/. 
+
+Seguindo o crongrama do plano, ja foi implementeado a Fase 1 e Fase 2. Sendo que para fazer Fase 2 optei por usar um arquivo .csv @data/raw/fga_20260420.csv que fornecerá os dados brutos, não sendo necessário realizar a implementação das conexões com o Postgres.
+A parte de carga desses dados já foi feito no fase 2 do projeto de migração e testada no arquivo @test_loader.py .
+
+Continuando do plano de migração, preciso implementar a "Fase 3: Transform (1-2 semanas)".  
+
+
+Fase 3: Transform implementada.
+Arquivos criados:
+Arquivo                     Descrição
+src/transform/situacao.py	Função incluir_situacao() (RN-001) - classifica FORMADO/EVADIDO
+src/transform/pivot.py	    Classe TabelaPivot + funções de seleção
+src/transform/__init__.py	Exports
+
+tests/test_transform.py	25 testes unitários
+Para executar os testes:
+pip install -r requirements.txt
+pytest tests/test_transform.py -v
+
+Uso básico:
+from src.data_source import load_csv, apply_standard_filters
+from src.transform import incluir_situacao, TabelaPivot, selecionar_alunos
+df = load_csv()
+df = apply_standard_filters(df)
+df = incluir_situacao(df)
+df_filtrado = selecionar_alunos(df, nome_curso="CIENCIA POLITICA", opcao="M")
+pivot = TabelaPivot().montar(df_filtrado)
