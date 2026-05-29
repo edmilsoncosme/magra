@@ -36,3 +36,12 @@ df = apply_standard_filters(df)
 df = incluir_situacao(df)
 df_filtrado = selecionar_alunos(df, nome_curso="CIENCIA POLITICA", opcao="M")
 pivot = TabelaPivot().montar(df_filtrado)
+
+## Realizando TESTE 29/25/2026
+
+- Seguindo o crongrama do plano e implementação do projeto magra @_reversa_sdd/plano_magra.md , ja foi implementeado a Fase 1 e Fase 2 e Fase 3. Sendo que para fazer Fase 2 optei por usar um arquivo .csv @data/raw/fga_20260420.csv que fornecerá os dados brutos, não sendo necessário realizar a implementação das conexões com o Postgres.
+A parte de carga desses dados já foi feito no fase 2 do projeto de migração e testada no arquivo @test_loader.py.
+Para a fase 3, um arquivo de teste unitário foi implementado. Ao executar o teste com o comando "pytest tests/test_transform.py -v", percebo que estão retonrando alguns erros. Verifique que erros são esses e como corrigi-los.
+
+- O prompt acima foi usado para corrigir o erro na montagem da tabela de pivot. 
+- Agora será realizado a Fase 4: ML Treinamento (2-3 semanas)

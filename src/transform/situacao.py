@@ -55,7 +55,7 @@ def is_valid_coorte(df: pd.DataFrame) -> bool:
     has_formado = (df["situacao"] == "FORMADO").any()
     has_evadido = (df["situacao"] == "EVADIDO").any()
 
-    return has_formado and has_evadido
+    return bool(has_formado and has_evadido)
 
 
 def get_situacao_counts(df: pd.DataFrame) -> dict:

@@ -34,8 +34,8 @@ class TabelaPivot:
 
         df_count = df.groupby(["matricula", col_disciplina]).size().reset_index(name="qtd")
 
-        self.pivot_table = df_count.pivot(
-            index="matricula", columns=col_disciplina, fill_value=0
+        self.pivot_table = df_count.pivot_table(
+            index="matricula", columns=col_disciplina, values="qtd", fill_value=0
         )
 
         self.alunos_processados = set(self.pivot_table.index)
