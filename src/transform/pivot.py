@@ -40,6 +40,9 @@ class TabelaPivot:
 
         self.alunos_processados = set(self.pivot_table.index)
 
+        if "situacao" in df.columns:
+            self.pivot_table = self.inserir_situacao(df)
+
         return self.pivot_table
 
     def inserir_contagens(self, df: pd.DataFrame) -> pd.DataFrame:

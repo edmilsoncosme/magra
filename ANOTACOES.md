@@ -45,3 +45,50 @@ Para a fase 3, um arquivo de teste unitário foi implementado. Ao executar o tes
 
 - O prompt acima foi usado para corrigir o erro na montagem da tabela de pivot. 
 - Agora será realizado a Fase 4: ML Treinamento (2-3 semanas)
+
+## Prompt para o Antigravity
+- Seguindo o crongrama do plano e implementação do projeto magra @_reversa_sdd/plano_magra.md , ja foi implementeado a Fase 1 e Fase 2 e Fase 3. Agora preciso que seja implementado a Fase 4 que é "ML Treinamento (2-3 semanas)". Sendo que para fazer Fase 2 optei por usar um arquivo .csv @data/raw/fga_20260420.csv que fornecerá os dados brutos, não sendo necessário realizar a implementação das conexões com o Postgres. Peço que avalie o plano e me informe qual a primeira atividade que deve ser feita.
+
+### O que foi implementado:
+
+  1. Estrutura Core ( ModelTrainer  em  src/ml/train.py ):
+      • Uma classe robusta que gerencia o ciclo de treinamento, desde o recebimento da tabela pivô até a exportação
+      final de métricas e persistência dos classificadores aprovados.
+  2. Equivalência Algorítmica (Fase 4.2):
+      • Migração e mapeamento dos 5 algoritmos de ML do R original para o ecossistema Python moderno ( scikit-learn ):
+          • C5.0: Simulado via  AdaBoostClassifier  com estimador de árvore de entropia e 10 trials.
+          • Random Forest: Implementado com  RandomForestClassifier  (10 árvores).
+          • CART (RPart): Implementado via  DecisionTreeClassifier  com complexidade parametrizada ( ccp_alpha=0.01 ).
+          • Regressão Logística: Implementado com  LogisticRegression  de base binomial.
+          • Rede Neural: Implementado via  MLPClassifier  com 1 camada oculta de 100 neurônios.
+
+  3. Garantia das Regras de Negócio:
+      • RN-002 (Validação de Coorte): Implementada validação que pula automaticamente coortes sem a presença mínima de
+      alunos  FORMADO  e  EVADIDO  ou com amostragem insuficiente.
+      • RN-003 (Critério de Aceitação): Validação estrita do F1-Score (tendo a evasão como classe de interesse).
+      Apenas modelos com $F1 \ge 0.7$ são qualificados para salvamento.
+  4. Persistência Estruturada (Fase 4.6):
+      • Modelos: Salvamento de dicionários contendo os modelos aprovados e suas respectivas features via  joblib  no
+      diretório  /models .
+      • Métricas: Consolidação de tabelas de métricas para todas as coortes do curso em formato CSV (separador por
+      ponto e vírgula, compatível com a modelagem do R original).
+  5. Testes Unitários (Fase 4.7):
+      • Criação do arquivo  tests/test_train.py  contendo 11 novos testes detalhados cobrindo:
+          • Casos de validação de coorte (vazias, classes únicas, baixo volume).
+          • Separação holdout 70/30 (estratificada e simples).
+          • Treinamento e avaliação individual de cada um dos 5 classificadores.
+          • Fluxo completo de aprovação do threshold e gravação dos arquivos no disco.
+
+### Próxima Etapa:
+
+  Com a base do  ModelTrainer  100% pronta e testada, os próximos passos naturais de acordo com o plano são:
+
+  1. Fase 5: ML Previsão (ML Previsão - 1 semana):
+      • Criação da classe  EvasaoPredictor  em  src/ml/predict.py  para carregar os modelos aprovados, filtrar alunos
+      com status  ATIVO  e gerar o CSV final com a probabilidade de evasão.
+  2. Fase 6: CLI e Integração (1 semana):
+      • Criação dos comandos na interface de linha de comando ( train ,  predict  e  pipeline ) para permitir executar
+      o treinamento completo a partir dos arquivos  .csv  de dados brutos.
+
+
+  Como você prefere prosseguir? Gostaria de começar a implementação da Fase 5 (ML Previsão)?          

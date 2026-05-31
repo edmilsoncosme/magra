@@ -1,3 +1,4 @@
+from numpy._core import arrayprint
 from src.data_source import load_csv, apply_standard_filters
 from src.transform import incluir_situacao, TabelaPivot, selecionar_alunos
 
@@ -19,8 +20,8 @@ df = load_csv()
 # print(f"Contagem de valores NaN em 'cod_dis_sigra': {contagem}")
 # print(valor)
 
-nome_cursos = df[['nome_curso', 'opcao']].drop_duplicates()
-print(nome_cursos.head())
+nome_cursos = df[['nome_curso', 'opcao', 'status_discente']].drop_duplicates()
+# print(nome_cursos.head(30))
 # nome_cursos = df[['nome_curso', 'codigo_comp_curricular']].nunique()
 # print("Cursos disponíveis:")
 # for curso in nome_cursos:
@@ -33,7 +34,13 @@ print(nome_cursos.head())
 
 df = apply_standard_filters(df)
 df = incluir_situacao(df)
+# print(df['situacao'].unique())
+# print(df.info())
+
 df_filtrado = selecionar_alunos(df, nome_curso="ENGENHARIA ELETRÔNICA", opcao=4005590)
+# print(df_filtrado['situacao'].unique())
+# print(df_filtrado.head())
+# print(df_filtrado['situacao'].unique())
 # df_filtrado = selecionar_alunos(df, nome_curso="ENGENHARIA AUTOMOTIVA")
 
 # print("Dados filtrados:")
@@ -43,5 +50,5 @@ df_filtrado = selecionar_alunos(df, nome_curso="ENGENHARIA ELETRÔNICA", opcao=4
 
 pivot = TabelaPivot().montar(df_filtrado)
 print("Tabela Pivot:")
-print(pivot.head(20))
-print(pivot.info())
+print(pivot.columns)
+
